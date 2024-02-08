@@ -25,10 +25,10 @@ app.use(express.static(dir));
 
 app.set("view engine", "ejs");
 
-// app.get("/main", (req, res) => {
-// 	// res.json({ message: "ok" });
-// 	res.render("home");
-// });
+app.get("/main", (req, res) => {
+	// res.json({ message: "ok" });
+	res.render("home");
+});
 
 app.get("/models", async (req, res) => {
 	// res.json({ message: "ok" })
@@ -104,6 +104,22 @@ app.post("/upload", upload.single("model"), async (req, res) => {
 app.get("/", (req, res) => {
 	try {
 		res.render("index");
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+app.get("/apps", (req, res) => {
+	try {
+		res.render("apps");
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+app.get("/achouak", (req, res) => {
+	try {
+		res.render("app");
 	} catch (error) {
 		res.status(500).json({ error: "Internal server error" });
 	}
