@@ -6,3 +6,6 @@ prototype/
 
 # File Upload Directory
 uploads/
+
+# Environment Files
+.env
