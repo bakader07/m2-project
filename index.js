@@ -187,14 +187,6 @@ app.get("/about", (req, res) => {
 	}
 });
 
-app.get("/about2", (req, res) => {
-	try {
-		res.render("about2");
-	} catch (error) {
-		res.status(500).json({ error: "Internal server error" });
-	}
-});
-
 app.get("/scientific-manifestations", (req, res) => {
 	try {
 		res.render("sci-man");
