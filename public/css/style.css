@@ -89,7 +89,7 @@
 }
 
 .navbar .navbar-nav .nav-link {
-    margin-right: 30px;
+    margin-right: 20px;
     padding: 25px 0;
     color: #FFFFFF;
     font-size: 15px;
@@ -235,7 +235,7 @@
 }
 
 .page-header {
-    background: url(../images/univ.png) top center no-repeat;
+    background: url(../images/tiasm-meeting.jpg) top center no-repeat;
     background-size: cover;
     text-shadow: 0 0 30px rgba(0, 0, 0, .1);
 }
