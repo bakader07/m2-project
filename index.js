@@ -228,18 +228,48 @@ app.get("/404", (req, res) => {
 	}
 });
 
-app.listen(port, () => {
-	console.log(`listening at http://localhost:${port}`);
-});
-
 app.get("/achouak", (req, res) => {
 	try {
-		res.render("app");
+		res.render("achouak");
 	} catch (error) {
 		res.status(500).json({ error: "Internal server error" });
 	}
 });
 app.post("/achouak", upload.single("image"), async (req, res) => {
+	try {
+		console.log(req.params.id);
+		// const model = await MLModel.findById(req.params.id);
+		// console.log(model);
+		console.log(req.file);
+
+		const modelFilename = "achouak_model.h5";
+		// const modelFilename = model.filename;
+		const imageFilename = req.file.filename;
+
+		const form = new FormData();
+		form.append("model", modelFilename);
+		form.append("image", imageFilename);
+		const result = await fetch("http://localhost:5000/predict", {
+			method: "POST",
+			body: form,
+		}).then((response) => response.json());
+
+		console.log(result);
+		res.render("achouak", { result: result });
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+app.get("/ibrahim", (req, res) => {
+	try {
+		res.render("ibrahim");
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+app.post("/ibrahim", upload.single("image"), async (req, res) => {
 	try {
 		console.log(req.params.id);
 		// const model = await MLModel.findById(req.params.id);
@@ -259,9 +289,13 @@ app.post("/achouak", upload.single("image"), async (req, res) => {
 		}).then((response) => response.json());
 
 		console.log(result);
-		res.render("app", { result: result });
+		res.render("ibrahim", { result: result });
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: "Internal server error" });
 	}
+});
+
+app.listen(port, () => {
+	console.log(`listening at http://localhost:${port}`);
 });
