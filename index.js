@@ -1,3 +1,4 @@
+const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -129,9 +130,17 @@ app.post("/add-app", upload.single("model"), async (req, res) => {
 	try {
 		console.log(req.body.name);
 		console.log(req.file.filename);
+		const filename = req.file.filename;
+		await fs.rename(
+			`${__dirname}/uploads/${filename}`,
+			`${__dirname}/uploads/${filename}.h5`,
+			function (err) {
+				if (err) console.log("ERROR: " + err);
+			}
+		);
 		const model = new MLModel({
 			name: req.body.name,
-			filename: req.file.filename,
+			filename: `${filename}.h5`,
 			description: req.body.description,
 			team: req.body.members,
 		});
@@ -173,7 +182,8 @@ app.post("/apps/:id", upload.single("image"), async (req, res) => {
 			body: form,
 		}).then((response) => response.json());
 
-		res.render("app", { model, result });
+		const prediction = result[0] > 0.5 ? "Positive" : "Negative";
+		res.render("app", { model, prediction });
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ error: "Internal server error" });
