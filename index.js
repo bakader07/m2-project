@@ -190,6 +190,30 @@ app.post("/apps/:id", upload.single("image"), async (req, res) => {
 	}
 });
 
+app.get("/datasets", async (req, res) => {
+	try {
+		res.render("datasets");
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+app.get("/add-dataset", (req, res) => {
+	try {
+		res.render("add-dataset");
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+app.get("/paludism", (req, res) => {
+	try {
+		res.render("dataset");
+	} catch (error) {
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
 app.get("/about", (req, res) => {
 	try {
 		res.render("about");
